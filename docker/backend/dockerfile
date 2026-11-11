@@ -1,0 +1,23 @@
+FROM node:20-alpine
+
+# server ki saari files app folder ke andar aa jayegi
+WORKDIR /app
+
+COPY ./package.json /app
+COPY ./package-lock.json /app
+
+RUN npm install
+
+COPY . /app
+
+# bring all files of backend here
+
+# if copy . . command brings all files of backend here, then why do we need to copy package.json and package-lock.json separately? The reason for copying `package.json` and `package-lock.json` separately before running `npm install` is to take advantage of Docker's layer caching mechanism. 
+
+# When you copy these files first and run `npm install`, Docker will cache the installed dependencies in a separate layer. If you later make changes to your application code but do not change the `package.json` or `package-lock.json`, Docker can reuse the cached layer for the dependencies instead of reinstalling them, which speeds up the build process.
+
+
+CMD ["node", "server.js"]
+# run keyword ke saath wala command tb execute hota hai jb image bn rhi hoti hai, aur CMD keyword ke saath wala command tb execute hota hai jb container run ho rha hota hai.
+
+# mein agr server mein ny api banauga server chalauga toh server turant changes dikha dega lekin docker container changes nhi dikhayega hme phirse docker build krke nyi image bnani padegi new api dekhne ke liye

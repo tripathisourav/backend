@@ -1,0 +1,30 @@
+services:
+  backend:
+    build: ./backend
+    ports: 
+      - "8080:3000"
+    volumes: 
+      - ./backend:/app
+      # backend folder ke andar jitna bhi content hai use container ke andar ke app folder ke saath sync kr do
+      # pehle ka jo content tha app folder mein woh overwrite ho jayega 
+      # isse ye hoga ki app folder mein backend ki saari files include ho jayegi node_modules bhi lekin node_modules jb node se linux pe aayegi toh dikkat bhi aayengi isliye hm volumes banate hai
+      - backend_node_modules:/app/node_modules
+      # replace windows node_module folder with images node_module
+      # bind mount completely ignores docker's ignore file
+    command: npx nodemon -L server.js
+
+
+
+  frontend:
+    build: ./frontend
+    ports: 
+      - "5173:5173"
+    volumes: 
+      - ./frontend:/app
+      - frontend_node_modules:/app/node_modules
+
+    command: npm run dev 
+
+volumes:
+  backend_node_modules:
+  frontend_node_modules:  

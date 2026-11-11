@@ -1,0 +1,13 @@
+services: 
+  backend:
+    build: ./backend #us folder ka path jismein dockerfile ho
+    ports: 
+      - "8080:3000"
+    volumes:
+      - ./backend:/app #backend folder ke andar jitna hai use leke jao conatiner ke app folder ke sath sync krdo
+      - backend_node_modules:/app/node_modules
+
+    command: npx nodemon -L /app/server.js #ab server mein kuch bhi changes honge toh woh direct redlect ho jayenga
+
+
+    # docker compose up uss folder mein chlti hai jismein dockerfile ho yha docker folder

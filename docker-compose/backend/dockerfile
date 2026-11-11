@@ -1,0 +1,15 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./ 
+# dono pacage /app mein aa jayengi iss line se 
+
+RUN npm install
+
+COPY . .
+
+EXPOSE 3000 
+#container jo image banayegi woh traffic port 3000 pe accept karega
+
+CMD ["node", "server.js"]

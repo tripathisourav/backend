@@ -1,0 +1,12 @@
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
+
+RUN npm install
+
+COPY . .  
+#saari files hai jo frontend folder ke andar unhe app ke andar copy krdo
+#saari files aa jayengi even container ki node_modules or env bhi kyuki container care nhi krta .dockerignore file ki
+CMD ["npm", "run", "dev"]

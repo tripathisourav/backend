@@ -1,0 +1,37 @@
+# frontend or backend dono ki image ek file mein
+# used for production
+# frontend docker backend docker and docker compose files are used for development 
+
+# stage 1 build frontend
+FROM node:20-alpine AS frontend_builder
+
+WORKDIR /app
+
+COPY ./frontend/package*.json /app
+
+RUN npm install
+
+COPY ./frontend /app 
+
+RUN npm run build
+
+
+# stage 2 - FULL STACK IMAGE (jha from command wha nyi stage nyi image )
+FROM node:20-alpine
+
+WORKDIR /app
+
+COPY ./backend/package*.json /app
+
+RUN npm install
+
+COPY ./backend /app 
+
+COPY --from=frontend_builder /app/dist /app/public
+# frontend builder ke app folder ke andar jo dist folder hai use is image ke app folder mein public naam se le aao
+
+CMD ["node", "server.js"]
+
+# ek image mein pura full stack server chl jayega this is used for production whereas yml is used for development
+
+# jb hm multistage components banate hai toh jo hmari last stage ki dockerfile hai whi asli image bnti hai baaki images bhi bnti hai pr temporary hoti hai
