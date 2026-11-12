@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: product-deployment
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
       app: product
@@ -25,3 +25,5 @@ spec:
           requests:
             memory: "64Mi"
             cpu: "250m"
+
+

@@ -9,7 +9,7 @@ app.use(express.json());
 
 
 app.get('/api/product', async (req, res) => {
-    const response = await axios.get("http://express-service")
+    const response = await axios.get("http://main-server-service")
     res.send(response.data);
 })
 

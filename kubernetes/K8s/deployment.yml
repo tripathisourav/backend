@@ -1,23 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: express-deployment
+  name: express-deployment #deployment ka naam
 spec:
-  replicas: 2
+  replicas: 3
   selector:
     matchLabels:
-      app: express
+      app: main-server
   template:
     metadata:
       labels:
-        app: express
+        app: main-server # label given to every pod
     spec:
-      containers: #a pod can run multiple containers
-      - name: express-container
-        image: cohort_2_express_server
+      containers: # a pod can run multiple containers
+      - name: main-server # name of container
+        image: express_cohort_2:latest
         imagePullPolicy: Always
         ports:
-        - containerPort: 3000
+        - containerPort: 3000 # container mein traffic konse port se jayega 
         resources:
           limits:
             memory: "128Mi" # RAM 128 megabytes
